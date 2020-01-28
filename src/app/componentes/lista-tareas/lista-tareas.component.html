@@ -1,0 +1,91 @@
+<nav class="navbar navbar-light bg-light">
+  <h2>Registro de tareas</h2>
+  <button class="btn btn-danger " (click)="CerrarSesion()">Cerrar sesion</button>
+</nav>
+<div class="container mt-5">
+    <div class="row justify-content-cente">
+        <div class="col-md-8">
+            <div *ngFor="let tarea of tareas | async" class="alert alert-info d-flex justify-content-between text-center " role="alert">
+              <div class="row">
+                <div class="col-md-4">
+                  <h3> {{tarea.nombre}} </h3>
+                  <h3> {{tarea.fecha}} </h3>
+                  <h3> {{tarea.prioridad}} </h3>
+                </div>
+                <div class="col-md-7">
+                  <img class="img-fluid" alt="Responsive image"  [src]=" tarea.url" alt="">
+                </div>
+                <div class="col-md-1 d-flex flex-column">
+                 <i (click)="EditarPrimero(tarea)"  data-toggle="modal" data-target="#exampleModal" class="fas fa-edit fa-2x mb-2"></i>
+                  <i (click)="EliminarTarea(tarea)" class="fa fa-trash fa-2x"></i>
+                </div>
+              </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+            <form (ngSubmit)=" RealizarOperacion()">
+                <div class="form-group">
+                  <label for="nombretarea">Nombre de la tarea</label>
+                  <input type="text" class="form-control" [(ngModel)]="nombreTarea" name="nombreTarea" placeholder="Asigna una tarea nueva">
+                </div>
+                <div class="form-group">
+                  <label for="fecha">Fecha de terminacion</label>
+                  <input type="text" class="form-control" [(ngModel)]="fechaTarea" name="fechaTarea" placeholder="Asigna la fecha">
+                </div>
+                <div class="form-group">
+                    <label for="Prioridad">Prioridad</label>
+                    <select class="form-control" [(ngModel)]="prioridadTarea" name="prioridadTarea">
+                        <option value="Irrelevante">Irrelevante</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Importante">Importante</option>
+                        <option value="Urgente">Urgente</option>
+                      </select> 
+                  </div>
+                  <div class="form-group">
+                    <label for="fecha">Imagen de referencia</label>
+                    <input type="file"(change)="uploadSingle($event)"  class="form-control" name="imagen" placeholder="sube la imagen">
+                  </div>
+                <button type="submit" class="btn btn-primary w-100">Registrar Tarea</button>
+              </form>
+          </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modificar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="RealizarModificacion()">
+          <div class="form-group">
+            <label for="nombretarea">Nombre de la tarea</label>
+            <input type="text" class="form-control" [(ngModel)]="nombreTareaModificar" name="nombreTareaModificar" placeholder="Asigna una tarea nueva">
+          </div>
+          <div class="form-group">
+            <label for="fecha">Fecha de terminacion</label>
+            <input type="text" class="form-control" [(ngModel)]="fechaTareaModificar" name="fechaTareaModificar" placeholder="Asigna la fecha">
+          </div>
+          <div class="form-group">
+              <label for="Prioridad">Prioridad</label>
+              <select class="form-control" [(ngModel)]="prioridadTareaModificar" name="prioridadTareaModificar">
+                  <option value="Irrelevante">Irrelevante</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Importante">Importante</option>
+                  <option value="Urgente">Urgente</option>
+                </select> 
+            </div>
+          <button type="submit" class="btn btn-primary w-100" >Modificar Tarea</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
